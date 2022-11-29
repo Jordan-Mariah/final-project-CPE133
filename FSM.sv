@@ -36,27 +36,28 @@ module FSM(
         begin
             PS <= NS;
         end
-    
+    //initialize high and low to 0
     always_comb
         begin
         h = 0; 
         l = 0;
         case (PS)
         
+   //always continue to next state at state a
          STA:
             begin
             h = 0;
             l = 0;
             NS = STB;
             end
-            
+    //always continue to next state at state b        
         STB:  
             begin
             h = 0;
             l = 0;
             NS = STC;
             end
-                
+   //if threshhold is 0 got to low track else continue             
          STC:
             begin
             h = 0;
@@ -70,14 +71,15 @@ module FSM(
                 NS = STD;
                 end
            end
-           
+     //when on state D continue to state E(this essentially creates two different threshholds depending on if we went to the low track initially or not.    
          STD:
             begin
             h = 0;
             l = 0;
             NS = STE;
             end
-                
+            
+     // if random bit is 1 go to high else go to low    
           STE:
                 begin
                 h = 0;
@@ -91,7 +93,8 @@ module FSM(
                     NS = STH2;
                     end
                end 
-               
+        
+       // if random bit is 1 go to high else go to low           
           STF:
                 begin
                 h = 0;
@@ -105,7 +108,8 @@ module FSM(
                     NS = STH3;
                     end
                 end
-                    
+          
+       // if random bit is 1 go to high else go to low              
           STG:
                 begin
                 h = 0;
@@ -120,13 +124,15 @@ module FSM(
                     end
                 end
                 
+      //cycle back to state A    
         STH:
              begin
                 h = 0;
                 l = 1;
                 NS = STA;
              end
-             
+    
+    // if random bit is 1 go to high else stay at low       
         STL1:
             begin
             h = 0;
@@ -140,7 +146,8 @@ module FSM(
                 NS = STH1;
                 end
            end
-           
+      
+      // if random bit is 1 go to high else stay at low   
         STL2:
             begin
             h = 0;
@@ -154,7 +161,8 @@ module FSM(
                 NS = STH2;
                 end
            end
-        
+       
+      // if random bit is 1 go to high else stay at low  
         STL3:
             begin
             h = 0;
@@ -168,7 +176,8 @@ module FSM(
                 NS = STH3;
                 end
            end 
-           
+      
+    // if random bit is 1 go to high else stay at low     
        STL4:
             begin
             h = 0;
@@ -182,35 +191,40 @@ module FSM(
                 NS = STH4;
                 end
             end 
-       
+            
+    //cycle back to state A
        STL5:
             begin
             h = 0;
             l = 0;
             NS = STA;
             end 
-            
+    
+     //continue along high track      
         STH1:
             begin
             h = 0;
             l = 0;
             NS = STH2;
             end
-            
+     
+     //continue along high track     
         STH2:
             begin
             h = 0;
             l = 0;
             NS = STH3;
             end
-            
+    
+    //continue along high track    
          STH3:
             begin
             h = 0;
             l = 0;
             NS = STH4;
             end
-            
+    
+    //cycle back to state A      
          STH4:
             begin
             h = 1;
